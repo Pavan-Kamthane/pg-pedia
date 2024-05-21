@@ -1,0 +1,302 @@
+@import url("theme.css");
+.student_dashboard{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.student_dashboard .userDetails{
+    width: 50%;
+    height: 300px;
+    /* height: auto; */
+    /* background-color: var(--secondary-color); */
+    margin: 0 auto;
+    margin-top: 150px;
+    border-right: 9px solid var(--secondary-color);
+    border-left: 9px solid var(--secondary-color);
+    text-align: center;
+    border-radius: 40px;
+}
+
+.student_dashboard .userDetails h1{
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-top: 20px;
+}
+
+.student_dashboard .userDetails p{
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+.student_dashboard .userDetails p span{
+    color: var(--secondary-color);
+}
+
+
+.student_dashboard .progressReport{
+    margin: 30px auto;
+    width: 90%;
+    /* height: 200px; */
+    border: 1px solid var(--secondary-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+}
+.student_dashboard .progressReport .box{
+    width: 20%;
+    height: 90%;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    margin: 20px;
+}
+.student_dashboard .progressReport .box span{
+    font-size:5rem;
+    color: var(--on-secondary-color);
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.student_dashboard .progressReport .box p{
+    font-size: 1.5rem;
+    color: var(--on-secondary-color);
+    text-align: center;
+}
+
+
+
+
+.student_dashboard .listOfSubbmissionsAndCorrections{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions{
+    width: 45%;
+    /* height: 300px; */
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 30px;
+    /* text-align: left; */
+}
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions h2{
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions .submission{
+    width: 90%;
+    /* height: 50px; */
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+    flex-direction: column;
+    margin-top: 20px;
+
+}
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions .submission p{
+    font-size: 1rem;
+    color: var(--on-secondary-color);
+}
+
+
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections{
+    width: 45%;
+    /* height: 300px; */
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 30px;
+    /* text-align: left; */
+}
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections h2{
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections .correction{
+    width: 90%;
+    /* height: 50px; */
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+    flex-direction: column;
+    margin-top: 20px;
+
+}
+
+.student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections .correction p{
+    font-size: 1rem;
+    color: var(--on-secondary-color);
+}
+
+.student_dashboard .submitDessertationButton{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    padding: 20px;
+    flex-direction: column;
+
+    margin-bottom: 30px;
+}
+
+.student_dashboard .submitDessertationButton h2{
+    font-size: 2rem;
+    color: var(--on-secondary-color);
+}
+.student_dashboard .submitDessertationButton p{
+    font-size: 1rem;
+    color: var(--on-secondary-color);
+
+}
+
+.student_dashboard .submitDessertationButton a{
+    width: 50%;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--on-primary-color);
+    font-size: 1.5rem;
+    margin-top: 20px;
+}  
+
+.student_dashboard .submitDessertationButton a:hover{
+    background-color: var(--on-primary-color);
+    color: var(--primary-color);
+}
+
+/* reponsiveness for all screens */
+
+@media screen and (max-width: 1054px){
+    .student_dashboard .userDetails{
+        width: 80%;
+    }
+    .student_dashboard .progressReport{
+        width: 90%;
+        flex-direction: column;
+    }
+    .student_dashboard .progressReport .box{
+        width: 90%;
+        padding: 10px;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections{
+        width: 90%;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions{
+        width: 90%;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections{
+        width: 90%;
+    }
+    .student_dashboard .submitDessertationButton{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .student_dashboard .userDetails{
+        width: 90%;
+    }
+    .student_dashboard .progressReport{
+        width: 90%;
+        flex-direction: column;
+    }
+  
+
+
+    .student_dashboard .listOfSubbmissionsAndCorrections{
+        width: 90%;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions{
+        width: 90%;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections{
+        width: 90%;
+    }
+    .student_dashboard .submitDessertationButton{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .student_dashboard .userDetails{
+        width: 90%;
+    }
+    .student_dashboard .userDetails p{
+        font-size: 1rem;
+    }
+    .student_dashboard .progressReport{
+        width: 90%;
+        flex-direction: column;
+    }
+    .student_dashboard .progressReport .box{
+        width: 90%;
+        padding: 10px;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections{
+        width: 90%;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections .listOfSubmissions{
+        width: 90%;
+    }
+    .student_dashboard .listOfSubbmissionsAndCorrections .listOfCorrections{
+        width: 90%;
+    }
+    .student_dashboard .submitDessertationButton{
+        width: 90%;
+
+    }
+
+    .student_dashboard .submitDessertationButton a{
+        width: 70%;
+        height: 50px;
+        padding: 20px;
+        font-size: 1rem;
+    }
+    .student_dashboard .submitDessertationButton h2{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .student_dashboard .submitDessertationButton p{
+        font-size: 1rem;
+        text-align: center;
+    }
+}
