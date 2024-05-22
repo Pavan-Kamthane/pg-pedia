@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import FacultiesDashboard from './components/FacultiesDashboard';
 import StudentsDashboard from './components/StudentsDashboard';
 import SubmitDissertation from './components/SubmitDissertation';
+import Mentees from './components/Mentees';
 // import TeacherDashboard from './components/TeacherDashboard';
 
 const App = () => {
@@ -38,6 +39,11 @@ const App = () => {
           <Route path='/submit-dissertation'
             element={
               <ProtectedRoute element={<SubmitDissertation />} />
+            }
+          />
+          <Route path='/mentees'
+            element={
+              <ProtectedRoute element={<Mentees />} />
             }
           />
           

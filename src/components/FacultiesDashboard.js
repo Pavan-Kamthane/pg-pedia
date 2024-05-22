@@ -1,5 +1,7 @@
-import React from 'react';
-import { useAuth } from '../AuthContext';
+import React from "react";
+import { useAuth } from "../AuthContext";
+import { Link } from "react-router-dom";
+import "../styles/facultyDashboard.css";
 
 const FacultyDashboard = () => {
   const { currentUser, userType } = useAuth();
@@ -9,10 +11,38 @@ const FacultyDashboard = () => {
   }
 
   return (
-    <div>
-      <h1>Faculty Dashboard</h1>
-      {userType && <p>User Type: {userType}</p>}
-    </div>
+  
+      <div className="facultyDashboard">
+        <div className="userDetails">
+          <h1>Dashboard</h1>
+          <p>
+            {/* welcome message to faculty */}
+            🌟Welcome,<span>{currentUser.name}!</span> to <span>PG-Pedia</span>
+            🌟
+            <br />
+          </p>
+        </div>
+
+        <div className="numberMenteesAndRequestsPending">
+          <div className="menteesBox">
+            <h2>Mentees</h2>
+            <p>0</p>
+            <Link 
+              to={"/mentees"}
+            >
+              View Mentees
+            </Link>
+          </div>
+          <div className="requestsPending">
+            <h2>Requests Pending</h2>
+            <p>0</p>
+            <Link>
+              View Requests
+            </Link>
+          </div>
+        </div>
+      </div>
+    
   );
 };
 
