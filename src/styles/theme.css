@@ -16,9 +16,9 @@ body{
     --background-color:  #DED4E8; /* Background color */
     /* on Background color */
     --on-background-color: #000000; /* On background color */
-    --primary-color: #000000; /* Primary color */
+    --primary-color: rgb(0, 0, 0); /* Primary color */
     --on-primary-color: #f5f0e1; /* On primary color */
-    --secondary-color: #bd007b; /* Secondary color */
+    --secondary-color: #0091bd; /* Secondary color */
     --on-secondary-color: #f5f0e1; /* On secondary color */
     
 }

@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
-import { AuthProvider } from './AuthContext';
+import { AuthProvider, useAuth } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import './styles/theme.css'
 import Footer from './components/Footer';
@@ -12,9 +12,16 @@ import FacultiesDashboard from './components/FacultiesDashboard';
 import StudentsDashboard from './components/StudentsDashboard';
 import SubmitDissertation from './components/SubmitDissertation';
 import Mentees from './components/Mentees';
+import SelectMentor from './components/SelectMentor';
+import ViewDessertation from './components/ViewDessertation';
 // import TeacherDashboard from './components/TeacherDashboard';
 
+
+
 const App = () => {
+
+  const currentUser = useAuth();
+
   return (
     <Router>
       <AuthProvider>
@@ -25,32 +32,42 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           {/* private screen */}
-          <Route path="/student-dashboard" 
+          <Route path="/student-dashboard"
             element={
-              <ProtectedRoute element={<StudentsDashboard/>} />
-            } 
+              <ProtectedRoute element={<StudentsDashboard />} />
+            }
           />
-          <Route path="/faculty-dashboard" 
+          <Route path="/faculty-dashboard"
             element={
               <ProtectedRoute element={<FacultiesDashboard />} />
-            } 
+            }
           />
 
-          <Route path='/submit-dissertation'
+          <Route path='/student/submit-dissertation'
             element={
               <ProtectedRoute element={<SubmitDissertation />} />
             }
           />
-          <Route path='/mentees'
+          <Route path='/faculty/mentees'
             element={
               <ProtectedRoute element={<Mentees />} />
             }
           />
-          
+          <Route path='/student/select-mentor'
+            element={
+              <ProtectedRoute element={<SelectMentor />} />
+            }
+          />
+          <Route path='/faculty/view-dissertation'
+            element={
+              <ProtectedRoute element={<ViewDessertation />} />
+            }
+          />
 
-          
+
+
         </Routes>
-        <Footer/>
+        <Footer />
       </AuthProvider>
     </Router>
   );

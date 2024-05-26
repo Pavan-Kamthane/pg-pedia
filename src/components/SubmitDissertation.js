@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "../styles/SubmitDissertation.css";
 
@@ -45,8 +45,7 @@ const SubmitDissertation = () => {
       async () => {
         try {
           const fileURL = await getDownloadURL(uploadTask.snapshot.ref);
-          await addDoc(collection(db, "dissertations"), {
-            userId: currentUser.uid,
+          const dissertationData = {
             domain,
             category,
             title,
@@ -55,7 +54,17 @@ const SubmitDissertation = () => {
             status,
             fileURL,
             createdAt: new Date().toISOString()
+          };
+          const docRef = await addDoc(collection(db, "dissertations"), {
+            userId: currentUser.uid,
+            ...dissertationData
           });
+
+          const studentDocRef = doc(db, "students", currentUser.uid);
+          await updateDoc(studentDocRef, {
+            pending: arrayUnion(docRef.id)
+          });
+
           navigate("/student-dashboard");
         } catch (error) {
           console.error("Failed to submit dissertation", error);

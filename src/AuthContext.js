@@ -44,21 +44,37 @@ export function AuthProvider({ children }) {
   const signUp = async (email, password, name, userType) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-
-    // Store user data in the appropriate Firestore collection
-    const collection = userType === 'student' ? "students" : "faculties";
-    await setDoc(doc(db, collection, user.uid), {
+  
+    // Initialize common user data
+    const userData = {
       uid: user.uid,
       email: user.email,
       name: name,
       userType: userType,
-      createdAt: new Date().toISOString()
-    });
-
+      createdAt: new Date().toISOString(),
+    };
+  
+    // Add user-specific fields
+    if (userType === 'student') {
+      userData.submitted = [];
+      userData.rejected = [];
+      userData.pending = [];
+      userData.mentorId = null; // Track the mentor
+    } else if (userType === 'faculty') {
+      userData.mentees = [];
+    }
+  
+    // Determine the collection to use
+    const collectionName = userType === 'student' ? 'students' : 'faculties';
+  
+    // Store user data in Firestore
+    await setDoc(doc(db, collectionName, user.uid), userData);
+  
     // Update currentUser state with additional data
-    setCurrentUser({ ...user, name, userType });
+    setCurrentUser({ ...user, ...userData });
     setUserType(userType);
   };
+  
 
   const logIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);

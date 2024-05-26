@@ -1,50 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../AuthContext";
 import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, } from "firebase/firestore";
 import "../styles/mentees.css";
 
 const Mentees = () => {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { currentUser } = useAuth();
+  const [mentees, setMentees] = useState([]);
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "students"));
-        const studentsList = querySnapshot.docs.map((doc) => doc.data());
-        setStudents(studentsList);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching students: ", error);
-        setError("Failed to fetch students. Please try again.");
-        setLoading(false);
-      }
-    };
+    if (currentUser && currentUser.mentees) {
+      fetchMenteesData(currentUser.mentees);
+    }
+  }, [currentUser]);
 
-    fetchStudents();
-  }, []);
+  const fetchMenteesData = async (menteesArray) => {
+    try {
+      const menteesData = [];
+      const studentsRef = collection(db, "students");
+      const menteesSnapshot = await getDocs(studentsRef);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+      menteesSnapshot.forEach((doc) => {
+        if (menteesArray.includes(doc.id)) {
+          menteesData.push({ id: doc.id, ...doc.data() });
+        }
+      });
 
-  if (error) {
-    return <p className="error">{error}</p>;
-  }
+      setMentees(menteesData);
+    } catch (error) {
+      console.error("Error fetching mentees data:", error);
+    }
+  };
 
   return (
-    <div className="mentees">
-      <h1>All Mentees</h1>
-      <ul>
-        {students.map((student, index) => (
-          <li key={index}>
-            <p>Name: {student.name}</p>
-            <p>Email: {student.email}</p>
-            <p>Course: {student.course}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="menteesPage">
+      <h1>Mentees</h1>
+      {mentees.length > 0 ? (
+        <ul className="menteesList">
+          {mentees.map((mentee) => (
+            <li key={mentee.id} className="mentee">
+              <h2>{mentee.name}</h2>
+              <p>Email: {mentee.email}</p>
+              <p>Submitted:  {mentee?.submitted?.length
+                ? mentee.submitted.length
+                : 0}
+              </p>
+              <p>Pending:
+                {mentee?.pending?.length ? mentee.pending.length : 0} </p>
+              <p>Rejected: {mentee?.rejected?.length
+                ? mentee.rejected.length
+                : 0}
+              </p>
+
+
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No mentees found.</p>
+      )}
     </div>
   );
 };

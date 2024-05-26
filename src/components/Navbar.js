@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/navbar.css';
 
 const Navbar = () => {
-  const { currentUser, logOut ,useType } = useAuth();
-  const Navigate = useNavigate();
+  const { currentUser, logOut, userType } = useAuth();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -27,15 +27,28 @@ const Navbar = () => {
         <div className={`menu ${isMenuOpen ? 'open' : ''}`}>
           {currentUser ? (
             <>
-              {/* <Link to="/dashboard">Dashboard</Link> */}
-              {useType === 'faculty' ? (
+              {userType === 'faculty' ? (
                 <Link to="/faculty-dashboard">Dashboard</Link>
               ) : (
-                <Link to="/student-dashboard">Dashboard</Link>
+                <>
+                  {/* if currentUser.mentorId is true then show only dashboard if false also show mentor  */}
+                  {
+                    currentUser.mentorId ? (
+                      <Link to="/student-dashboard">Dashboard</Link>
+                    ) : (
+                      <>
+                        <Link to="/student/select-mentor">Mentor</Link>
+                        <Link to="/student-dashboard">Dashboard</Link>
+                      </>
+                    )
+                  }
+                  {/* <Link to="/student/select-mentor">Mentor</Link>
+                  <Link to="/student-dashboard">Dashboard</Link> */}
+                </>
               )}
               <button onClick={() => {
                 logOut();
-                Navigate('/');
+                navigate('/');
               }}>Log Out</button>
             </>
           ) : (
