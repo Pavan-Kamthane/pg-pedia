@@ -136,23 +136,53 @@
 
 
 /* add responsive ness */
-@media screen and (max-width: 768px) {
-    .hero .content {
-        width: 90%;
-        padding: 1rem;
+@media screen and (max-width: 1000px){
+    .hero{
+        flex-direction: column-reverse;
     }
 
-    .hero .content h1 {
+    .hero .content{
+        width: 80%;
+    }
+
+    .hero .images{
+        width: 80%;
+    }
+    .hero .images img{
+        width: 100%;
+    }
+
+
+
+    .hero .content h1{
         font-size: 2rem;
     }
+    .hero .content h1 span{
+        font-size: 2.5rem;
+    }
 
-    .hero .content p {
+    .hero .content p{
         font-size: 1rem;
     }
 
-    .hero .content a{
-        padding: 8px 16px;
+    .whychooseus{
+        width: 100%;
     }
-}
 
+    .whychooseus h2{
+        font-size: 2rem;
+    }
 
+    .whychooseus .content{
+        flex-direction: column;
+    }
+
+    .whychooseus h2{
+        margin-top: 2rem;
+    }
+
+    .whychooseus .content .box{
+        width: 80%;
+        margin-bottom: 2rem;
+    }
+} 
