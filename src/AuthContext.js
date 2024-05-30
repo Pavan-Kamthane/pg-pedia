@@ -79,7 +79,7 @@ export function AuthProvider({ children }) {
   const logIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-
+  
     // Try to fetch user data from both collections
     let userDoc = await getDoc(doc(db, "students", user.uid));
     if (!userDoc.exists()) {
@@ -88,13 +88,14 @@ export function AuthProvider({ children }) {
     } else {
       setUserType('student');
     }
-
+  
     if (userDoc.exists()) {
       setCurrentUser({ ...user, ...userDoc.data() });
     } else {
       setCurrentUser(null);
     }
   };
+  
 
   const logOut = () => {
     return signOut(auth);

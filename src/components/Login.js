@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.css';
@@ -6,7 +6,7 @@ import '../styles/login.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { logIn, userType } = useAuth();
+  const { logIn, userType, currentUser } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,22 +16,22 @@ const Login = () => {
     try {
       setLoading(true); // Set loading state to true when login process starts
       await logIn(email, password);
+    } catch (error) {
+      setError('Failed to log in. Please try again.');
+      console.error("Failed to log in", error);
+      setLoading(false); // Set loading state to false if there's an error
+    }
+  };
 
-      // Navigate to the appropriate dashboard based on user type
+  useEffect(() => {
+    if (currentUser && userType) {
       if (userType === 'student') {
         navigate('/student-dashboard');
       } else if (userType === 'faculty') {
         navigate('/faculty-dashboard');
-      } else {
-        throw new Error('Unknown user type');
       }
-    } catch (error) {
-      setError('Failed to log in. Please try again.');
-      console.error("Failed to log in", error);
-    } finally {
-      setLoading(false); // Set loading state to false after login process completes
     }
-  };
+  }, [currentUser, userType, navigate]);
 
   return (
     <div className='login'>
