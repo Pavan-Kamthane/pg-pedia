@@ -1,27 +1,39 @@
-@import url("./theme.css");
-
-.viewDissertation {
+.viewTopics {
     width: 100%;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-.viewDissertation h1{
+.viewTopics h1 {
     font-size: 2.5rem;
     color: var(--primary-color);
     margin-bottom: 1rem;
     margin-top: 150px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.viewTopics h1 button{
+    /* width: 100%; */
+    padding:  10px 20px;
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 0 10px;
 }
 
-.viewDissertation ul{
+.viewTopics ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.viewDissertation ul li{
+.viewTopics ul li {
     padding: 1rem;
     background-color: var(--secondary-color);
     color: var(--on-primary-color);
@@ -30,16 +42,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
 }
 
-.viewDissertation ul li p{
+
+
+.viewTopics ul li p {
     font-size: 1.5rem;
     color: var(--on-primary-color);
     margin-bottom: 1rem;
 }
 
+.viewTopics ul li .left{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
 
-.viewDissertation ul li .right{
+}
+
+
+.viewTopics ul li .right{
     width: 20%;
     display: flex;
     justify-content: space-between;
@@ -48,7 +72,7 @@
     gap: 20px;
 }
 
-.viewDissertation ul li .right button{
+.viewTopics ul li .right button{
     width: 100%;
     padding:  10px 20px;
     background-color: var(--primary-color);
@@ -59,12 +83,12 @@
     margin: 0 10px;
 }
 
-.viewDissertation ul li .right button:hover{
+.viewTopics ul li .right button:hover{
     background-color: var(--on-primary-color);
     color: var(--primary-color);
 }
 
-.viewDissertation ul li .right input{
+.viewTopics ul li .right input{
     width: 100%;
     padding:  10px 20px;
     background-color: var(--primary-color);
@@ -75,12 +99,12 @@
     margin: 0 10px;
 }
 
-.viewDissertation ul li .right input:hover{
+.viewTopics ul li .right input:hover{
     background-color: var(--on-primary-color);
     color: var(--primary-color);
 }
 
-.viewDissertation ul li .right a{
+.viewTopics ul li .right a{
     width: 100%;
     padding:  10px 20px;
     background-color: var(--primary-color);
@@ -89,14 +113,15 @@
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
+    text-align: center;
 }
 
-.viewDissertation ul li .right a:hover{
+.viewTopics ul li .right a:hover{
     background-color: var(--on-primary-color);
     color: var(--primary-color);
 }
 
-.viewDissertation ul li .right p{
+.viewTopics ul li .right p{
     width: 100%;
     font-size: 1.5rem;
     color: var(--on-primary-color);

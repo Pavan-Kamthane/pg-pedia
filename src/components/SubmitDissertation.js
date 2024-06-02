@@ -9,19 +9,15 @@ import "../styles/SubmitDissertation.css";
 const SubmitDissertation = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [domain, setDomain] = useState("");
-  const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
-  const [submittedOn, setSubmittedOn] = useState("");
-  const [status, setStatus] = useState("Pending");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!domain || !category || !title || !description || !submittedOn || !file) {
+    if (!title || !description || !file) {
       setError("All fields are required");
       return;
     }
@@ -46,12 +42,8 @@ const SubmitDissertation = () => {
         try {
           const fileURL = await getDownloadURL(uploadTask.snapshot.ref);
           const dissertationData = {
-            domain,
-            category,
             title,
             description,
-            submittedOn,
-            status,
             fileURL,
             createdAt: new Date().toISOString()
           };
@@ -85,24 +77,6 @@ const SubmitDissertation = () => {
       <div className="submit-dissertation">
         <h1>Submit Dissertation</h1>
         <form onSubmit={handleSubmit}>
-          <select 
-            value={domain}
-            onChange={(e) => setDomain(e.target.value)}
-            required
-          >
-            <option value="" disabled>Select Domain</option>
-            <option value="Science">Science</option>
-            <option value="Engineering">Engineering</option>
-            <option value="Arts">Arts</option>
-            <option value="Business">Business</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Category (Core Domain)"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          />
           <input
             type="text"
             placeholder="Title"
@@ -114,13 +88,6 @@ const SubmitDissertation = () => {
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-          <input
-            type="date"
-            placeholder="Submitted On"
-            value={submittedOn}
-            onChange={(e) => setSubmittedOn(e.target.value)}
             required
           />
           <p>Upload your dissertation</p>

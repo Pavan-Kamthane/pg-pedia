@@ -14,6 +14,8 @@ import SubmitDissertation from './components/SubmitDissertation';
 import Mentees from './components/Mentees';
 import SelectMentor from './components/SelectMentor';
 import ViewDessertation from './components/ViewDessertation';
+import SelectTopic from './components/SelectTopic';
+import ViewTopics from './components/ViewTopics';
 // import TeacherDashboard from './components/TeacherDashboard';
 
 
@@ -61,6 +63,16 @@ const App = () => {
           <Route path='/faculty/view-dissertation'
             element={
               <ProtectedRoute element={<ViewDessertation />} />
+            }
+          />
+          <Route path='/student/select-topic'
+            element={
+              <ProtectedRoute element={<SelectTopic />} />
+            }
+          />
+          <Route path='/faculty/view-topics'
+            element={
+              <ProtectedRoute element={<ViewTopics />} />
             }
           />
 

@@ -41,7 +41,44 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const signUp = async (email, password, name, userType) => {
+
+  // const signUp = async (email, password, name, userType, department) => {
+  //   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  //   const user = userCredential.user;
+  
+  //   // Initialize common user data
+  //   const userData = {
+  //     uid: user.uid,
+  //     email: user.email,
+  //     name: name,
+  //     userType: userType,
+  //     department: department,
+  //     createdAt: new Date().toISOString(),
+  //   };
+  
+  //   // Add user-specific fields
+  //   if (userType === 'student') {
+  //     userData.submitted = [];
+  //     userData.rejected = [];
+  //     userData.pending = [];
+  //     userData.mentorId = null; // Track the mentor
+  //   } else if (userType === 'faculty') {
+  //     userData.mentees = [];
+  //   }
+  
+  //   // Determine the collection to use
+  //   const collectionName = userType === 'student' ? 'students' : 'faculties';
+  
+  //   // Store user data in Firestore
+  //   await setDoc(doc(db, collectionName, user.uid), userData);
+  
+  //   // Update currentUser state with additional data
+  //   setCurrentUser({ ...user, ...userData });
+  //   setUserType(userType);
+  // };
+  
+
+  const signUp = async (email, password, name, userType, department) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
   
@@ -56,10 +93,14 @@ export function AuthProvider({ children }) {
   
     // Add user-specific fields
     if (userType === 'student') {
+      userData.department = department;
       userData.submitted = [];
       userData.rejected = [];
       userData.pending = [];
       userData.mentorId = null; // Track the mentor
+      userData.pendingTopic = [];
+      userData.acceptedTopic = [];
+      userData.rejectedTopic = [];
     } else if (userType === 'faculty') {
       userData.mentees = [];
     }
@@ -74,7 +115,6 @@ export function AuthProvider({ children }) {
     setCurrentUser({ ...user, ...userData });
     setUserType(userType);
   };
-  
 
   const logIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);

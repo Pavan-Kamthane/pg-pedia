@@ -23,6 +23,25 @@
     font-size: 2.5rem;
     color: var(--primary-color);
     margin-bottom: 1rem;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    align-items: center;
+}
+.facultyDashboard .userDetails h1 button{
+    padding:  10px 20px;
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .facultyDashboard .userDetails p{

@@ -10,6 +10,8 @@ const StudentsDashboard = () => {
   const [mentor, setMentor] = useState(null);
   const [loadingMentor, setLoadingMentor] = useState(true);
   const [dissertations, setDissertations] = useState([]);
+  const [topic,setTopic] = useState([]);
+
 
   useEffect(() => {
     const fetchMentorDetails = async () => {
@@ -23,9 +25,7 @@ const StudentsDashboard = () => {
       }
       setLoadingMentor(false);
     };
-
-    fetchMentorDetails();
-
+  
     const fetchDissertations = async () => {
       try {
         const dissertationsRef = collection(db, "dissertations");
@@ -34,7 +34,7 @@ const StudentsDashboard = () => {
         const data = [];
         for (const doc of snapshot.docs) {
           const dissertationData = doc.data();
-          data.push({ id: doc.id,  ...dissertationData });
+          data.push({ id: doc.id, ...dissertationData });
         }
         setDissertations(data);
       } catch (error) {
@@ -42,10 +42,41 @@ const StudentsDashboard = () => {
       }
     };
 
-    if (currentUser) {
+    const fetchTopic = async () => {
+      try {
+        const topicsRef = collection(db, "studentTopics");
+        const q = query(topicsRef, where("userId", "==", currentUser.uid));
+        const snapshot = await getDocs(q);
+        const data = [];
+        for (const doc of snapshot.docs) {
+          const topicData = doc.data();
+          data.push({ id: doc.id, ...topicData });
+        }
+        setTopic(data);
+      } catch (error) {
+        console.error("Error fetching topics:", error);
+      }
+    };
+
+
+
+
+  
+    fetchMentorDetails();
+    fetchDissertations();
+    fetchTopic();
+
+
+    const intervalId = setInterval(() => {
+      fetchMentorDetails();
       fetchDissertations();
-    }
-  }, [currentUser]);
+    }, 1000);
+  
+    return () => clearInterval(intervalId);
+  }, [currentUser]); // Empty dependency array to run effect only once
+  
+  // ...
+  
 
   const [hasSubmission, setHasSubmission] = useState(false);
 
@@ -75,6 +106,20 @@ const StudentsDashboard = () => {
       </p>
     ); // or handle the case where currentUser is null
   }
+
+  const handleLinkClick = (e) => {
+    if (!currentUser.mentorId) {
+      e.preventDefault();
+      alert("Please select a mentor before submitting your dissertation.");
+    }
+  };
+
+  const handleSelectTopic = (e) => {
+    if (!currentUser.mentorId) {
+      e.preventDefault();
+      alert("Please select a mentor before submitting your topic.");
+    }
+  };
 
   return (
     <div className="student_dashboard">
@@ -109,7 +154,40 @@ const StudentsDashboard = () => {
         )}
       </div>
 
-      <div className="progressReport">
+      <div className="selectTopicButton submitDessertationButton"
+        style={{ display: currentUser?.acceptedTopic?.length === 0 ? 'flex' : 'none' }}
+      >
+        <h2>Select Topic</h2>
+        <p>Click the button below to select a topic for your dissertation.</p>
+        <Link
+          to="/student/select-topic"
+        onClick={handleSelectTopic} className="selectTopicBtn">
+          Select Topic
+        </Link>
+      </div>
+
+      {/* show topic details */}
+      <div className="topicDetails" style={{ display: currentUser?.acceptedTopic?.length === 0 ? 'none' : 'flex' }}>
+        <h2>Selected Topic</h2>
+        <ul>
+          {/* only accepted status */}
+          {topic.filter(topic => topic.status === "Accepted").map((topic, index) => (
+            <li key={index}>
+              <p>Title: {topic.title}</p>
+              {/* <p>Submitted on: {topic.createdAt}</p> */}
+              <p>Description: {topic.description}</p>
+              {/* topic file */}
+              <Link to={topic.fileURL} target="_blank">
+                View Topic
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+      </div>
+
+
+      <div className="progressReport" style={{ display: currentUser?.acceptedTopic?.length === 0 ? 'none' : 'flex' }}>
         <div className="box">
           <span>{submittedCount}</span>
           <p>No. Of Submission</p>
@@ -124,7 +202,9 @@ const StudentsDashboard = () => {
         </div>
       </div>
 
-      <div className="listOfAcceptedAndRejectedOrPending">
+
+
+      <div className="listOfAcceptedAndRejectedOrPending" style={{ display: currentUser?.acceptedTopic?.length === 0 ? 'none' : 'flex' }}>
         <div className="box">
           <h2>Accepted</h2>
           {/* those dissertations whose status= "Accepted" */}
@@ -170,15 +250,10 @@ const StudentsDashboard = () => {
         </div>
       </div>
 
-      <div className="submitDessertationButton">
-        {/* <h2>Submit Dissertation</h2>
 
-        <p>Click the button below to submit your dissertation.</p>
 
-        <Link to="/student/submit-dissertation" className="submitDissertation">
-          Submit Dissertation
-        </Link> */}
 
+      <div className="submitDessertationButton" style={{ display: currentUser?.acceptedTopic?.length === 0 ? 'none' : 'flex' }}>
         <h2>
           {hasSubmission
             ? "Submit Another Dissertation"
@@ -194,6 +269,7 @@ const StudentsDashboard = () => {
             : "Submit Dissertation"}
         </Link>
       </div>
+
     </div>
   );
 };
