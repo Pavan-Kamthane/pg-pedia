@@ -166,17 +166,46 @@ const StudentsDashboard = () => {
         </Link>
       </div>
 
+      {/* if topics are rejected */}
+      <div className="rejectedTopics topicDetails" style={{ 
+        // margin bottom
+        // display: currentUser?.acceptedTopic?.length === 0 ? 'flex;' : 'none;'
+        display: currentUser?.acceptedTopic?.length === 0 ? 'flex' : 'none',
+        margin: "20px auto",
+        
+      }}>
+        <h2
+          style={{
+            color:currentUser?.rejectedTopic?.length === 0 ? "#DED4E8":'red',
+          }}
+        >Rejected Topics</h2>
+        <ul
+          style={{
+            background:currentUser?.rejectedTopic?.length === 0 ? "#DED4E8":'red',
+          }}
+        >
+          {topic.filter(topic => topic.status === "Rejected").map((topic, index) => (
+            <li key={index}>
+              <p>Title: {topic.title}</p>
+              <p>Description: {topic.description}</p>
+              <p>Rejection Reason: {topic.rejectionReason}</p>
+              <Link to={topic.fileURL} target="_blank">
+                View Topic
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+
       {/* show topic details */}
       <div className="topicDetails" style={{ display: currentUser?.acceptedTopic?.length === 0 ? 'none' : 'flex' }}>
         <h2>Selected Topic</h2>
         <ul>
-          {/* only accepted status */}
           {topic.filter(topic => topic.status === "Accepted").map((topic, index) => (
             <li key={index}>
               <p>Title: {topic.title}</p>
-              {/* <p>Submitted on: {topic.createdAt}</p> */}
               <p>Description: {topic.description}</p>
-              {/* topic file */}
               <Link to={topic.fileURL} target="_blank">
                 View Topic
               </Link>
